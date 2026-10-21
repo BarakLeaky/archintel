@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/archintel}
+    username: ${SPRING_DATASOURCE_USERNAME:archintel}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+  flyway.enabled: true
+management.endpoints.web.exposure.include: health
+archintel:
+  base-url: ${APP_BASE_URL:http://localhost:4200}
+  cors-origin: ${CORS_ORIGIN:http://localhost:4200}
+  newness:
+    new-days: 7
+    recent-days: 14
+  jwt:
+    # REQUIRED. >= 32 bytes. The app refuses to start with a blank or "change-me..." secret.
+    secret: ${JWT_SECRET:}
+    ttl-minutes: 120
+  github:
+    # OPTIONAL. Blank = unauthenticated (much lower rate limits).
+    token: ${GITHUB_TOKEN:}
+    api-base: https://api.github.com
+    api-version: "2022-11-28"
+    per-page: 30
+    max-pages: 5
+    max-file-chars: 20000
