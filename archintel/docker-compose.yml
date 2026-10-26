@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:16-alpine
+    ports: ["5434:5432"]
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -10,6 +11,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       retries: 10
+
   backend:
     build: ./backend
     env_file: .env
@@ -24,5 +26,6 @@ services:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health || exit 1"]
       interval: 10s
       retries: 10
+
 volumes:
   pgdata:
